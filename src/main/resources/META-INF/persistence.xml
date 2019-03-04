@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0"> 
+  <persistence-unit name="openjpa" transaction-type="RESOURCE_LOCAL"> 
+    <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
+    <class>com.climaware.model.Award</class>
+    <class>com.climaware.model.User</class>
+    <class>com.climaware.model.Role</class>
+    <class>com.climaware.model.WeatherStation</class>
+    <properties>
+      <property name="openjpa.ConnectionURL" value="jdbc:derby:derbydb;create=true"/>
+      <property name="openjpa.ConnectionDriverName" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+      <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
+      <property name="openjpa.Log" value="DefaultLevel=WARN, Tool=INFO"/>
+
+    </properties>
+  </persistence-unit>
+</persistence>
