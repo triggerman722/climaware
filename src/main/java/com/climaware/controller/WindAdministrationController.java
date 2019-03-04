@@ -3,7 +3,9 @@ package com.climaware.controller;
 
 import com.climaware.model.WeatherStation;
 
+import com.climaware.model.WindRecord;
 import com.climaware.service.WeatherStationService;
+import com.climaware.service.WindRecordService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,11 +30,13 @@ import java.util.List;
 public class WindAdministrationController extends HttpServlet {
 
     private WeatherStationService weatherStationService;
+    private WindRecordService windRecordService;
 
     @Override
     public void init() throws ServletException {
         super.init();
         weatherStationService = new WeatherStationService();
+        windRecordService = new WindRecordService();
     }
 
     @Override
@@ -77,6 +81,14 @@ public class WindAdministrationController extends HttpServlet {
                         System.out.println(parts[4]);//time
                         System.out.println(parts[13]);//windspeed
                         //works? Now to make the object and save them
+                        WindRecord windRecord = new WindRecord();
+                        windRecord.setYear(Integer.parseInt(parts[1]));
+                        windRecord.setMonth(Integer.parseInt(parts[2]));
+                        windRecord.setDay(Integer.parseInt(parts[3]));
+                        windRecord.setTime(parts[4]);
+                        windRecord.setWindspeed(Integer.parseInt(parts[13]));
+
+                        windRecordService.add(windRecord);
 
                     } catch (Exception e) {
                         System.out.println(e.getMessage());

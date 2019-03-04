@@ -6,6 +6,7 @@
     <class>com.climaware.model.User</class>
     <class>com.climaware.model.Role</class>
     <class>com.climaware.model.WeatherStation</class>
+    <class>com.climaware.model.WindRecord</class>
     <properties>
       <property name="openjpa.ConnectionURL" value="jdbc:derby:derbydb;create=true"/>
       <property name="openjpa.ConnectionDriverName" value="org.apache.derby.jdbc.EmbeddedDriver"/>
