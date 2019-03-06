@@ -30,19 +30,8 @@ public class WindController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String id = req.getParameter("awardid");
-
-        List<Award> awards = new ArrayList<>();
-
-        if (id == null) {
-            awards = awardService.getAll();
-        } else {
-            Award award = awardService.get(Long.valueOf(id));
-            awards.add(award);
-        }
-
-        req.setAttribute("awards", awards);
-        getServletContext().getRequestDispatcher("/awardlist.jsp").forward(req, resp);
+        //I think this is just a form to make a request
+        getServletContext().getRequestDispatcher("/windrequest.jsp").forward(req, resp);
     }
 
     @Override
@@ -53,6 +42,12 @@ public class WindController extends HttpServlet {
         String action = req.getParameter("action");
 
         if (action!=null && action.equalsIgnoreCase("adj")) {
+            String year = req.getParameter("year");
+            String month = req.getParameter("month");
+            String day = req.getParameter("day");
+            String latitude = req.getParameter("latitude");
+            String longitude = req.getParameter("longitude");
+
             //on this date/location, get the wind record
             //evaluate its windspeed and return low/medium/high
         } else if (action != null && action.equalsIgnoreCase("udw")) {

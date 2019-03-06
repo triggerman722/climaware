@@ -44,17 +44,17 @@ public class WindAdministrationController extends HttpServlet {
 
         String id = req.getParameter("id");
 
-        List<WeatherStation> weatherStations = new ArrayList<>();
+        List<WindRecord> windRecords = new ArrayList<>();
 
         if (id == null) {
-            weatherStations = weatherStationService.getAll();
+            windRecords = windRecordService.getAll();
         } else {
-            WeatherStation weatherStation = weatherStationService.get(Long.valueOf(id));
-            weatherStations.add(weatherStation);
+            WindRecord windRecord= windRecordService.get(Long.valueOf(id));
+            windRecords.add(windRecord);
         }
 
-        req.setAttribute("weatherstations", weatherStations);
-        getServletContext().getRequestDispatcher("/weatherstationlist.jsp").forward(req, resp);
+        req.setAttribute("windrecords", windRecords);
+        getServletContext().getRequestDispatcher("/windrecordlist.jsp").forward(req, resp);
     }
 
     @Override
