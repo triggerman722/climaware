@@ -1,8 +1,6 @@
 package com.climaware.controller;
 
-import com.climaware.model.Award;
 import com.climaware.model.WeatherStation;
-import com.climaware.service.AwardService;
 import com.climaware.service.WeatherStationService;
 
 import javax.servlet.ServletException;
@@ -11,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,7 +38,7 @@ public class WeatherStationController extends HttpServlet {
         String longitude = req.getParameter("longitude");
         String distance = req.getParameter("distance");
 
-        List<WeatherStation> weatherStations = weatherStationService.getByLatitudeLongitudeDistance(latitude,longitude, distance);
+        List<WeatherStation> weatherStations = weatherStationService.getByLatitudeLongitudeDistance(latitude, longitude, distance);
         req.setAttribute("weatherstations", weatherStations);
         getServletContext().getRequestDispatcher("/weatherstationlist.jsp").forward(req, resp);
     }

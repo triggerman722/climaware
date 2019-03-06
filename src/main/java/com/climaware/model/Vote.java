@@ -8,7 +8,7 @@ import java.util.Date;
  * Created by greg on 21/04/15.
  */
 @Entity
-public class Vote  implements Serializable {
+public class Vote implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

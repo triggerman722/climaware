@@ -6,19 +6,60 @@
 
 package com.climaware.model;
 
-import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
- *
  * @author greg
  */
 
 @Entity
 @Table(name = "userprofile")
 public class Userprofile implements Serializable {
+
+    private Long reputation;
+    private boolean contributors_enabled;
+    private String lang;
+    private String profile_background_image_url;
+    private boolean protected2;
+    private String profile_link_color;
+    private String url;
+    private String name;
+    private int listed_count;
+    private int utc_offset;
+    private String profile_background_color;
+    private long followers_count;
+    private String profile_image_url;
+    private String description;
+    private boolean profile_background_tile;
+    private boolean default_profile;
+    private long statuses_count;
+    private boolean following;
+    private String created_at;
+    private String profile_sidebar_fill_color;
+    private String screen_name;
+    private boolean geo_enabled;
+    private boolean default_profile_image;
+    private long friends_count;
+    private String profile_sidebar_border_color;
+    @Id
+    private String id_str;
+    private boolean show_all_inline_media;
+    private boolean follow_request_sent;
+    private String profile_background_image_url_https;
+    private boolean is_translator;
+    private boolean notifications;
+    private boolean profile_use_background_image;
+    private String profile_image_url_https;
+    private long id;
+    private boolean verified;
+    private String time_zone;
+    private long favourites_count;
+    private String profile_text_color;
+    private String location;
+    private String profile_banner_url;
 
     public boolean isContributors_enabled() {
         return contributors_enabled;
@@ -324,8 +365,6 @@ public class Userprofile implements Serializable {
         this.location = location;
     }
 
-  
-
     public String getProfile_banner_url() {
         return profile_banner_url;
     }
@@ -341,47 +380,4 @@ public class Userprofile implements Serializable {
     public void setReputation(Long reputation) {
         this.reputation = reputation;
     }
-
-    private Long reputation;
-    private boolean contributors_enabled;
-    private String lang;
-    private String profile_background_image_url;
-    private boolean protected2;
-    private String profile_link_color;
-    private String url;
-    private String name;
-    private int listed_count;
-    private int utc_offset;
-    private String profile_background_color;
-    private long followers_count;
-    private String profile_image_url;
-    private String description;
-    private boolean profile_background_tile;
-    private boolean default_profile;
-    private long statuses_count;
-    private boolean following;
-    private String created_at;
-    private String profile_sidebar_fill_color;
-    private String screen_name;
-    private boolean geo_enabled;
-    private boolean default_profile_image;
-    private long friends_count;
-    private String profile_sidebar_border_color;
-    @Id
-    private String id_str;
-    private boolean show_all_inline_media;
-    private boolean follow_request_sent;
-    private String profile_background_image_url_https;
-    private boolean is_translator;
-    private boolean notifications;
-    private boolean profile_use_background_image;
-    private String profile_image_url_https;
-    private long id;
-    private boolean verified;
-    private String time_zone;
-    private long favourites_count;
-    private String profile_text_color;
-    private String location;
-    
-    private String profile_banner_url;
 }

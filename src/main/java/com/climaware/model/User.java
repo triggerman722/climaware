@@ -1,7 +1,5 @@
 package com.climaware.model;
 
-import com.climaware.model.Role;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -40,7 +38,8 @@ public class User {
     public String getUsername() {
         return username;
     }
-    @Column(unique=true)
+
+    @Column(unique = true)
     public void setUsername(String username) {
         this.username = username;
     }
@@ -79,6 +78,7 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
     public String getLinkedinurl() {
         return linkedinurl;
     }
@@ -86,6 +86,7 @@ public class User {
     public void setLinkedinurl(String linkedinurl) {
         this.linkedinurl = linkedinurl;
     }
+
     public String getTwitterurl() {
         return twitterurl;
     }
@@ -93,6 +94,7 @@ public class User {
     public void setTwitterurl(String twitterurl) {
         this.twitterurl = twitterurl;
     }
+
     public String getFacebookurl() {
         return facebookurl;
     }
@@ -100,6 +102,7 @@ public class User {
     public void setFacebookurl(String facebookurl) {
         this.facebookurl = facebookurl;
     }
+
     public String getGithuburl() {
         return githuburl;
     }
@@ -107,6 +110,7 @@ public class User {
     public void setGithuburl(String githuburl) {
         this.githuburl = githuburl;
     }
+
     public String getBlogurl() {
         return blogurl;
     }
@@ -114,6 +118,7 @@ public class User {
     public void setBlogurl(String blogurl) {
         this.blogurl = blogurl;
     }
+
     public String getWebsiteurl() {
         return websiteurl;
     }
@@ -121,6 +126,7 @@ public class User {
     public void setWebsiteurl(String websiteurl) {
         this.websiteurl = websiteurl;
     }
+
     public String getPhotourl() {
         return photourl;
     }
@@ -128,6 +134,7 @@ public class User {
     public void setPhotourl(String photourl) {
         this.photourl = photourl;
     }
+
     public String getBannerurl() {
         return bannerurl;
     }

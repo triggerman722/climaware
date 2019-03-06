@@ -5,16 +5,11 @@
  */
 package com.climaware.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
 
 /**
- *
  * @author greg
  */
 @Entity
@@ -33,7 +28,7 @@ public class Post implements Serializable {
     private float longitude;
     private Long radius;
 
-	private boolean requestPhotos;
+    private boolean requestPhotos;
     private boolean requestVideos;
     private boolean requestAudio;
 
@@ -41,7 +36,7 @@ public class Post implements Serializable {
     private Long votesdown;
 
     private Long acceptedcommentid;
-	
+
 
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date datecreated;
@@ -120,7 +115,7 @@ public class Post implements Serializable {
         this.dateexpired = dateexpired;
     }
 
-	public boolean getRequestPhotos() {
+    public boolean getRequestPhotos() {
         return requestPhotos;
     }
 

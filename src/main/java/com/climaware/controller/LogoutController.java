@@ -1,9 +1,5 @@
 package com.climaware.controller;
 
-import com.climaware.model.User;
-import com.climaware.security.Encryptor;
-import com.climaware.service.UserService;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

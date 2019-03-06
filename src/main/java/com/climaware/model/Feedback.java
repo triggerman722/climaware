@@ -12,7 +12,6 @@ import javax.persistence.Temporal;
 import java.util.Date;
 
 /**
- *
  * @author greg
  */
 public class Feedback {

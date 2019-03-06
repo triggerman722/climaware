@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * Created by greg on 3/3/19.
  */
-@WebFilter(urlPatterns = { "/users/*","/awards/*", "/members/*"})
+@WebFilter(urlPatterns = {"/users/*", "/awards/*", "/members/*"})
 public class AuthenticationFilter implements Filter {
 
 
@@ -24,8 +24,8 @@ public class AuthenticationFilter implements Filter {
 
         HttpServletRequest httpReq = (HttpServletRequest) servletRequest;
         HttpSession session = httpReq.getSession();
-        String username = (String)session.getAttribute("username");
-        if (username!=null) {
+        String username = (String) session.getAttribute("username");
+        if (username != null) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         } else {

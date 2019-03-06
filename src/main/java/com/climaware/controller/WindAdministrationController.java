@@ -2,7 +2,6 @@ package com.climaware.controller;
 
 
 import com.climaware.model.WeatherStation;
-
 import com.climaware.model.WindRecord;
 import com.climaware.service.WeatherStationService;
 import com.climaware.service.WindRecordService;
@@ -19,7 +18,6 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-
 import java.util.Calendar;
 import java.util.List;
 
@@ -49,7 +47,7 @@ public class WindAdministrationController extends HttpServlet {
         if (id == null) {
             windRecords = windRecordService.getAll();
         } else {
-            WindRecord windRecord= windRecordService.get(Long.valueOf(id));
+            WindRecord windRecord = windRecordService.get(Long.valueOf(id));
             windRecords.add(windRecord);
         }
 
@@ -63,7 +61,7 @@ public class WindAdministrationController extends HttpServlet {
         List<WeatherStation> weatherStations = weatherStationService.getAll();
         for (WeatherStation weatherStation : weatherStations) {
 
-            URL url = new URL("http://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID="+weatherStation.getStationid()+"&Year="+Calendar.getInstance().get(Calendar.YEAR)+"&Month="+Calendar.getInstance().get(Calendar.MONTH)+"&Day="+Calendar.getInstance().get(Calendar.DAY_OF_MONTH)+"&timeframe=1&submit=Download+Data");
+            URL url = new URL("http://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=" + weatherStation.getStationid() + "&Year=" + Calendar.getInstance().get(Calendar.YEAR) + "&Month=" + Calendar.getInstance().get(Calendar.MONTH) + "&Day=" + Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + "&timeframe=1&submit=Download+Data");
 
             URLConnection conn = url.openConnection();
             InputStream inputStream = conn.getInputStream();

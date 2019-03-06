@@ -5,16 +5,11 @@
  */
 package com.climaware.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
 
 /**
- *
  * @author greg
  */
 @Entity
@@ -23,11 +18,11 @@ public class Comment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private Long createdby; //user id
     private String comment;
-	private Long entityid; // the thing the comment applies to.	
-	
+    private Long entityid; // the thing the comment applies to.
+
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date datecreated;
 

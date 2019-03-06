@@ -6,13 +6,13 @@
 package com.climaware.model;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * "Name","Province","Climate ID","Station ID","WMO ID","TC ID","Latitude (Decimal Degrees)",
  * "Longitude (Decimal Degrees)","Latitude","Longitude","Elevation (m)","First Year",
  * "Last Year","HLY First Year","HLY Last Year","DLY First Year","DLY Last Year",
  * "MLY First Year","MLY Last Year"
+ *
  * @author greg
  */
 @Entity
@@ -25,7 +25,7 @@ public class WeatherStation {
 
     private String name;
     private String province;
-    @Column(length=255)
+    @Column(length = 255)
     private String climateid;
     private String stationid;
     private String wmoid;

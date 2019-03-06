@@ -9,9 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by greg on 3/3/19.
@@ -41,7 +39,7 @@ public class WindController extends HttpServlet {
         //in either case, a vague low/medium/high should be returned.
         String action = req.getParameter("action");
 
-        if (action!=null && action.equalsIgnoreCase("adj")) {
+        if (action != null && action.equalsIgnoreCase("adj")) {
             String year = req.getParameter("year");
             String month = req.getParameter("month");
             String day = req.getParameter("day");

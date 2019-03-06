@@ -1,7 +1,6 @@
 package com.climaware.controller;
 
 import com.climaware.model.User;
-import com.climaware.security.Encryptor;
 import com.climaware.service.UserService;
 
 import javax.servlet.ServletException;
@@ -9,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**

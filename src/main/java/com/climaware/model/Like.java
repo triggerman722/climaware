@@ -10,7 +10,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- *
  * @author greg
  */
 @Entity
@@ -19,7 +18,7 @@ public class Like implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private Long createdby; //user id
     private Long entityid; // the thing the like applies to.
 

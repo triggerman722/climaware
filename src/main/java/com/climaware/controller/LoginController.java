@@ -31,7 +31,7 @@ public class LoginController extends HttpServlet {
         UserService userService = new UserService();
         User user = userService.getByUsername(username);
 
-        if (user!=null && Encryptor.validatePassword(password, user.getPassword())) {
+        if (user != null && Encryptor.validatePassword(password, user.getPassword())) {
             HttpSession session = req.getSession();
             session.setAttribute("username", username);
             resp.sendRedirect(req.getContextPath() + "/awards");

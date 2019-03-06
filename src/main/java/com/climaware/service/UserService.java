@@ -11,12 +11,13 @@ public class UserService {
 	public User get(long id) {
 		return (User) SystemDataAccess.get(User.class, id);
 	}
+
     public List<User> getAll() {
         return SystemDataAccess.getAll("select p from User p ");
     }
 
 	public void add(User user) {
-        user = encryptuser(user);
+		user = encryptuser(user);
 		user.setId(null);
 		SystemDataAccess.add(user);
 	}
@@ -32,11 +33,9 @@ public class UserService {
 		return (User) SystemDataAccess.set(User.class, id, user);
 	}
 
-	private boolean doesExist(long id){
+	private boolean doesExist(long id) {
 		Object object = get(id);
-		if (object!=null)
-			return true;
-		return false;
+		return object != null;
 	}
 
 	public User getByUsername(String username) {
@@ -44,9 +43,8 @@ public class UserService {
 		tvoObject[0][0] = "username";
 		tvoObject[0][1] = username;
 		List<User> ppAll = SystemDataAccess.getWithParams("select p from User  p where p.username in (:username) ", tvoObject);
-		if (ppAll.size() > 0)
-		{
-			return (User) ppAll.get(0);
+		if (ppAll.size() > 0) {
+			return ppAll.get(0);
 		}
 		return null;
 	}
