@@ -1,4 +1,4 @@
-package com.climaware.administration.postalcode.controller;
+package com.climaware.postalcode.controller;
 
 
 import com.climaware.postalcode.model.PostalCodeLocation;
@@ -9,18 +9,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by greg on 3/3/19.
  */
-@WebServlet(value = "/administration/postalcode/*")
-public class PostalCodeLocationAdministrationController extends HttpServlet {
+@WebServlet(value = "/postalcode/*")
+public class PostalCodeLocationController extends HttpServlet {
 
     private PostalCodeLocationService postalCodeLocationService;
 
@@ -51,37 +48,22 @@ public class PostalCodeLocationAdministrationController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        int ideleted = postalCodeLocationService.deleteAll();
+        String postalcode = req.getParameter("postalcode");
+        String latitude = req.getParameter("latitude");
+        String longitude = req.getParameter("longitude");
 
-        System.out.println("Just deleted " + ideleted + " records.");
+        if (postalcode != "" && latitude != "" && longitude != "") {
+            PostalCodeLocation postalCodeLocation = new PostalCodeLocation();
+            postalCodeLocation.setPostalcode(postalcode);
+            postalCodeLocation.setLatitude(Float.parseFloat(latitude));
+            postalCodeLocation.setLongitude(Float.parseFloat(longitude));
 
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("postalcodes/postalcodes.csv");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String parts[] = line.split(",");
-
-            try {
-
-                if (parts[1] == null | parts[1] == "" | Double.valueOf(parts[1]) == 0)
-                    continue;
-
-                if (parts[2] == null | parts[2] == "" | Double.valueOf(parts[2]) == 0)
-                    continue;
-
-                PostalCodeLocation postalCodeLocation = new PostalCodeLocation();
-                postalCodeLocation.setPostalcode(parts[0]);
-                postalCodeLocation.setLatitude(Double.valueOf(parts[1]));
-                postalCodeLocation.setLongitude(Double.valueOf(parts[2]));
-
-                postalCodeLocationService.add(postalCodeLocation);
-
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+            postalCodeLocationService.add(postalCodeLocation);
+        } else {
+            postalCodeLocationService.reloadAllPostalCodes();
         }
-        resp.sendRedirect(req.getContextPath() + "/administration/postalcode/");
+
+        resp.sendRedirect(req.getContextPath() + "/postalcode/");
     }
 
 }

@@ -1,6 +1,7 @@
 package com.climaware.wind.controller;
 
-import com.climaware.wind.model.WindScore;
+
+import com.climaware.wind.model.WindRecord;
 import com.climaware.wind.service.WindRecordService;
 
 import javax.servlet.ServletException;
@@ -9,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by greg on 3/3/19.
@@ -16,7 +20,7 @@ import java.io.IOException;
 @WebServlet(value = "/wind/*")
 public class WindController extends HttpServlet {
 
-    WindRecordService windRecordService;
+    private WindRecordService windRecordService;
 
     @Override
     public void init() throws ServletException {
@@ -27,40 +31,48 @@ public class WindController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        //I think this is just a form to make a request
-        getServletContext().getRequestDispatcher("/windrequest.jsp").forward(req, resp);
+        String id = req.getParameter("id");
+
+        List<WindRecord> windRecords = new ArrayList<>();
+
+        if (id == null) {
+            windRecords = windRecordService.getAll();
+        } else {
+            WindRecord windRecord = windRecordService.get(Long.valueOf(id));
+            windRecords.add(windRecord);
+        }
+
+        req.setAttribute("windrecords", windRecords);
+        getServletContext().getRequestDispatcher("/wind/windrecordlist.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //an ADJUSTER can ask if a wind event occurred on a specific date and location
-        //an UNDERWRITER can ask if the system "thinks" a location will have a high probability of a wind event in the future
-        //in either case, a vague low/medium/high should be returned.
-        String action = req.getParameter("action");
 
-        if (action != null && action.equalsIgnoreCase("adj")) {
-            String year = req.getParameter("year");
-            String month = req.getParameter("month");
-            String day = req.getParameter("day");
-            String postalcode = req.getParameter("postalcode");
+        String latitude = req.getParameter("latitude");
+        String longitude = req.getParameter("longitude");
+        if (latitude != "" && longitude != "") {
 
-            WindScore windScore = windRecordService.score(year, month, day, postalcode);
+            WindRecord windRecord = new WindRecord();
+            windRecord.setLatitude(Float.parseFloat(req.getParameter("latitude")));
+            windRecord.setLongitude(Float.parseFloat(req.getParameter("longitude")));
+            windRecord.setPostalcode(req.getParameter("postalcode"));
+            windRecord.setWindspeed(Integer.parseInt(req.getParameter("windspeed")));
+            windRecord.setYear(Integer.parseInt(req.getParameter("year")));
+            windRecord.setMonth(Integer.parseInt(req.getParameter("month")));
+            windRecord.setDay(Integer.parseInt(req.getParameter("day")));
+            windRecord.setTime(req.getParameter("time"));
 
-            req.setAttribute("score", windScore);
-
-            getServletContext().getRequestDispatcher("/windresponse.jsp").forward(req, resp);
-
-
-            //on this date/location, get the wind record
-            //evaluate its windspeed and return low/medium/high
-        } else if (action != null && action.equalsIgnoreCase("udw")) {
-            //for this location, get a count of the low/medium/high wind events
-            String postalcode = req.getParameter("postalcode");
-            //weight the counts
-            //evaluate if the total is low/medium/high and return
+            windRecordService.add(windRecord);
+        } else {
+            windRecordService.downloadData(
+                    Calendar.getInstance().get(Calendar.YEAR),
+                    Calendar.getInstance().get(Calendar.MONTH),
+                    Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
         }
 
-        resp.sendRedirect(req.getContextPath() + "/wind");
+
+        resp.sendRedirect(req.getContextPath() + "/wind/");
     }
 
 }

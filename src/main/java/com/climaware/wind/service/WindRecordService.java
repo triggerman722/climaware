@@ -117,14 +117,9 @@ public class WindRecordService {
 
     }
 
-    public void downloadData(String latitude, String longitude, String stationid, int year, int month, int day) throws IOException {
+    public void downloadData(int year, int month, int day) throws IOException {
 
-        URL url = new URL("http://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=" +
-                stationid +
-                "&Year=" + year +
-                "&Month=" + month +
-                "&Day=" + day +
-                "&timeframe=1&submit=Download+Data");
+        URL url = new URL("ftp://client_climate@ftp.tor.ec.gc.ca/Pub/Get_More_Data_Plus_de_donnees/Station Inventory EN.csv");
 
         URLConnection conn = url.openConnection();
         InputStream inputStream = conn.getInputStream();
@@ -136,21 +131,47 @@ public class WindRecordService {
             String parts[] = line.split(",");
             if (parts.length > 2 && !parts[0].equalsIgnoreCase("name")) {
                 try {
-                    WindRecord windRecord = new WindRecord();
-                    windRecord.setYear(Integer.parseInt(parts[1]));
-                    windRecord.setMonth(Integer.parseInt(parts[2]));
-                    windRecord.setDay(Integer.parseInt(parts[3]));
-                    windRecord.setTime(parts[4]);
-                    windRecord.setWindspeed(Integer.parseInt(parts[13]));
-                    windRecord.setLatitude(Float.parseFloat(latitude));
-                    windRecord.setLongitude(Float.parseFloat(longitude));
 
-                    add(windRecord);
 
+                    URL windurl = new URL("http://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=" +
+                            parts[3] +
+                            "&Year=" + year +
+                            "&Month=" + month +
+                            "&Day=" + day +
+                            "&timeframe=1&submit=Download+Data");
+
+                    URLConnection windconn = windurl.openConnection();
+                    InputStream windinputStream = windconn.getInputStream();
+                    BufferedReader windreader = new BufferedReader(new InputStreamReader(windinputStream));
+
+                    String windline;
+                    while ((windline = windreader.readLine()) != null) {
+                        windline = windline.replaceAll("\"", "");
+                        String windparts[] = windline.split(",");
+                        if (windparts.length > 2) {
+                            try {
+                                WindRecord windRecord = new WindRecord();
+                                windRecord.setYear(Integer.parseInt(windparts[1]));
+                                windRecord.setMonth(Integer.parseInt(windparts[2]));
+                                windRecord.setDay(Integer.parseInt(windparts[3]));
+                                windRecord.setTime(windparts[4]);
+                                windRecord.setWindspeed(Integer.parseInt(windparts[13]));
+                                windRecord.setLatitude(Float.parseFloat(parts[6]));
+                                windRecord.setLongitude(Float.parseFloat(parts[7]));
+
+                                add(windRecord);
+
+                            } catch (Exception e) {
+                                System.out.println(e.getMessage());
+                            }
+                        }
+                    }
+                    windreader.close();
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
             }
         }
+        reader.close();
     }
 }

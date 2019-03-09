@@ -4,6 +4,10 @@ package com.climaware.postalcode.service;
 import com.climaware.persistence.SystemDataAccess;
 import com.climaware.postalcode.model.PostalCodeLocation;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 
 public class PostalCodeLocationService {
@@ -56,4 +60,37 @@ public class PostalCodeLocationService {
         return object != null;
     }
 
+    public void reloadAllPostalCodes() throws IOException {
+
+        int ideleted = deleteAll();
+
+        System.out.println("Just deleted " + ideleted + " records.");
+
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("postalcodes/postalcodes.csv");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String parts[] = line.split(",");
+
+            try {
+
+                if (parts[1] == null | parts[1] == "" | Double.valueOf(parts[1]) == 0)
+                    continue;
+
+                if (parts[2] == null | parts[2] == "" | Double.valueOf(parts[2]) == 0)
+                    continue;
+
+                PostalCodeLocation postalCodeLocation = new PostalCodeLocation();
+                postalCodeLocation.setPostalcode(parts[0]);
+                postalCodeLocation.setLatitude(Double.valueOf(parts[1]));
+                postalCodeLocation.setLongitude(Double.valueOf(parts[2]));
+
+                add(postalCodeLocation);
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
 }
