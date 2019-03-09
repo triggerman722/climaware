@@ -95,4 +95,13 @@ public final class SystemDataAccess {
             em.close();
         }
     }
+
+    public static int deleteAll(String qlString) {
+        EntityManager em = EMF.get().createEntityManager();
+        em.getTransaction().begin();
+        int lResult = em.createQuery(qlString).executeUpdate();
+        em.getTransaction().commit();
+        em.close();
+        return lResult;
+    }
 }
