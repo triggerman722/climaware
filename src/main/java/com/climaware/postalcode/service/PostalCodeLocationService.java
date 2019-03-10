@@ -21,12 +21,32 @@ public class PostalCodeLocationService {
     }
 
     public PostalCodeLocation getByPostalCode(String postalcode) {
+        String upperpostalcode = postalcode.toUpperCase();
+
         Object[][] tvoObject = new Object[1][2];
         tvoObject[0][0] = "postalcode";
-        tvoObject[0][1] = postalcode;
-        List<PostalCodeLocation> ppAll = SystemDataAccess.getWithParams("select p from PostalCodeLocation  p where p.postalcode in (:postalcode) ", tvoObject);
+        tvoObject[0][1] = upperpostalcode;
+        List<PostalCodeLocation> ppAll = SystemDataAccess.getWithParams("select p from PostalCodeLocation  p where UPPER(p.postalcode) = :postalcode ", tvoObject);
         if (ppAll.size() > 0) {
             return ppAll.get(0);
+        } else {
+            tvoObject[0][1] = upperpostalcode.substring(0, 3) + "%";
+            List<PostalCodeLocation> ppVeryNarrow = SystemDataAccess.getWithParams("select p from PostalCodeLocation  p where UPPER(p.postalcode) like :postalcode ", tvoObject);
+            if (ppVeryNarrow.size() > 0) {
+                return ppVeryNarrow.get(0);
+            } else {
+                tvoObject[0][1] = upperpostalcode.substring(0, 2) + "%";
+                List<PostalCodeLocation> ppNarrow = SystemDataAccess.getWithParams("select p from PostalCodeLocation  p where UPPER(p.postalcode) like :postalcode ", tvoObject);
+                if (ppNarrow.size() > 0) {
+                    return ppNarrow.get(0);
+                } else {
+                    tvoObject[0][1] = upperpostalcode.substring(0, 1) + "%";
+                    List<PostalCodeLocation> ppWide = SystemDataAccess.getWithParams("select p from PostalCodeLocation  p where UPPER(p.postalcode) like :postalcode ", tvoObject);
+                    if (ppWide.size() > 0) {
+                        return ppWide.get(0);
+                    }
+                }
+            }
         }
         return null;
     }

@@ -1,6 +1,7 @@
 package com.climaware.wind.controller;
 
 import com.climaware.wind.model.WindScore;
+import com.climaware.wind.service.WindFactService;
 import com.climaware.wind.service.WindRecordService;
 
 import javax.servlet.ServletException;
@@ -17,16 +18,18 @@ import java.io.IOException;
 public class WindScoreController extends HttpServlet {
 
     WindRecordService windRecordService;
+    WindFactService windFactService;
 
     @Override
     public void init() throws ServletException {
         super.init();
         windRecordService = new WindRecordService();
+        windFactService = new WindFactService();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/wind/windscorerequest.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/wind/windscorerequest.jsp").forward(req, resp);
     }
 
     @Override
@@ -35,28 +38,22 @@ public class WindScoreController extends HttpServlet {
         //an UNDERWRITER can ask if the system "thinks" a location will have a high probability of a wind event in the future
         //in either case, a vague low/medium/high should be returned.
         String action = req.getParameter("action");
+        String postalcode = req.getParameter("postalcode");
+        WindScore windScore = null;
 
         if (action != null && action.equalsIgnoreCase("adj")) {
             String year = req.getParameter("year");
             String month = req.getParameter("month");
             String day = req.getParameter("day");
-            String postalcode = req.getParameter("postalcode");
 
-            WindScore windScore = windRecordService.score(year, month, day, postalcode);
-
-            req.setAttribute("score", windScore);
-
-            getServletContext().getRequestDispatcher("/wind/windscoreresponse.jsp").forward(req, resp);
-
-
-            //on this date/location, get the wind record
-            //evaluate its windspeed and return low/medium/high
+            windScore = windRecordService.score(year, month, day, postalcode);
         } else if (action != null && action.equalsIgnoreCase("udw")) {
-            //for this location, get a count of the low/medium/high wind events
-            String postalcode = req.getParameter("postalcode");
-            //weight the counts
-            //evaluate if the total is low/medium/high and return
+            windScore = windFactService.score(postalcode);
         }
+        req.setAttribute("score", windScore);
+
+        getServletContext().getRequestDispatcher("/WEB-INF/wind/windscoreresponse.jsp").forward(req, resp);
+
     }
 
 }

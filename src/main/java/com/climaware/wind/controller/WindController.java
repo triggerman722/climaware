@@ -1,6 +1,7 @@
 package com.climaware.wind.controller;
 
 
+import com.climaware.util.ControllerUtil;
 import com.climaware.wind.model.WindRecord;
 import com.climaware.wind.service.WindRecordService;
 
@@ -36,14 +37,20 @@ public class WindController extends HttpServlet {
         List<WindRecord> windRecords = new ArrayList<>();
 
         if (id == null) {
-            windRecords = windRecordService.getAll();
+            int offset = ControllerUtil.getParameterAsInt(req.getParameter("offset"), 0, 0, 9999);
+            int pagesize = ControllerUtil.getParameterAsInt(req.getParameter("pagesize"), 10, 0, 9999);
+            int backoffset = ControllerUtil.getParameterAsInt(String.valueOf(offset - pagesize), 0, 0, 9999);
+            windRecords = windRecordService.getAllPaged(offset, pagesize);
+            req.setAttribute("offset", offset + pagesize);
+            req.setAttribute("backoffset", backoffset);
+            req.setAttribute("pagesize", pagesize);
         } else {
             WindRecord windRecord = windRecordService.get(Long.valueOf(id));
             windRecords.add(windRecord);
         }
 
         req.setAttribute("windrecords", windRecords);
-        getServletContext().getRequestDispatcher("/wind/windrecordlist.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/wind/windrecordlist.jsp").forward(req, resp);
     }
 
     @Override
@@ -51,7 +58,7 @@ public class WindController extends HttpServlet {
 
         String latitude = req.getParameter("latitude");
         String longitude = req.getParameter("longitude");
-        if (latitude != "" && longitude != "") {
+        if (latitude != null && longitude != null) {
 
             WindRecord windRecord = new WindRecord();
             windRecord.setLatitude(Float.parseFloat(req.getParameter("latitude")));

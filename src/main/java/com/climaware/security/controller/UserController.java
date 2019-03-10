@@ -41,7 +41,7 @@ public class UserController extends HttpServlet {
         }
 
         req.setAttribute("users", users);
-        getServletContext().getRequestDispatcher("/awardlist.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/awardlist.jsp").forward(req, resp);
     }
 
     @Override

@@ -51,6 +51,16 @@ public final class SystemDataAccess {
         return lResult;
     }
 
+
+    public static List getAllPaged(String qlString, int offset, int pagesize) {
+
+        EntityManager em = EMF.get().createEntityManager();
+        em.getTransaction().begin();
+        List lResult = em.createQuery(qlString).setFirstResult(offset).setMaxResults(pagesize).getResultList();
+        em.getTransaction().commit();
+        em.close();
+        return lResult;
+    }
     public static Object get(Class entityClass, Object primaryKey) {
         EntityManager em = EMF.get().createEntityManager();
         Object oResult = em.find(entityClass, primaryKey);

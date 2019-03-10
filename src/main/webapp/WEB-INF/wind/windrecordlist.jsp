@@ -28,5 +28,6 @@
     </tr>
     </c:forEach>
 </table>
+<a href="?offset=${backoffset}&pagesize=${pagesize}">Back</a> | <a href="?offset=${offset}&pagesize=${pagesize}">Next</a>
 </body>
 </html>

@@ -20,7 +20,7 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/security/login.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/security/login.jsp").forward(req, resp);
     }
 
     @Override
@@ -34,9 +34,9 @@ public class LoginController extends HttpServlet {
         if (user != null && Encryptor.validatePassword(password, user.getPassword())) {
             HttpSession session = req.getSession();
             session.setAttribute("username", username);
-            resp.sendRedirect(req.getContextPath() + "/awards");
+            resp.sendRedirect(req.getContextPath() + "/wind");
         } else {
-            getServletContext().getRequestDispatcher("/security/login.jsp").forward(req, resp);
+            getServletContext().getRequestDispatcher("/WEB-INF/security/login.jsp").forward(req, resp);
         }
 
     }

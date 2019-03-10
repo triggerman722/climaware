@@ -42,7 +42,7 @@ public class PostalCodeLocationController extends HttpServlet {
         }
 
         req.setAttribute("postalcodelocations", postalCodeLocations);
-        getServletContext().getRequestDispatcher("/postalcode/postalcodelocationlist.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/postalcode/postalcodelocationlist.jsp").forward(req, resp);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class PostalCodeLocationController extends HttpServlet {
         String latitude = req.getParameter("latitude");
         String longitude = req.getParameter("longitude");
 
-        if (postalcode != "" && latitude != "" && longitude != "") {
+        if (postalcode != null && latitude != null && longitude != null) {
             PostalCodeLocation postalCodeLocation = new PostalCodeLocation();
             postalCodeLocation.setPostalcode(postalcode);
             postalCodeLocation.setLatitude(Float.parseFloat(latitude));

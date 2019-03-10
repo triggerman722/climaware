@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * Created by greg on 3/3/19.
  */
-@WebFilter(urlPatterns = {"/users/*", "/awards/*", "/members/*"})
+@WebFilter(urlPatterns = {"/users/*", "/postalcode/*", "/wind/*"})
 public class AuthenticationFilter implements Filter {
 
 

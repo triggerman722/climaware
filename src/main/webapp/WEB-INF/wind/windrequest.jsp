@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-<title>Wind Request</title>
+<title>Add a new Wind Record</title>
 </head>
 <body>
 <form method="POST">
@@ -9,9 +9,12 @@
 <p>Month: <input name=month>
 <p>Day: <input name=day>
 <p>Postal Code: <input name=postalcode>
-<input type=hidden name=action value=adj>
+<p>Time: <input name=time>
+<p>Windspeed (km/h): <input name=windspeed>
+<p>Latitude: <input name=latitude>
+<p>Longitude: <input name=longitude>
+
 <input type="submit">
 </form>
-Yer score is ${score} and that means ${scorestring}
 </body>
 </html>

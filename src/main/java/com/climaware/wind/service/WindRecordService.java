@@ -30,6 +30,9 @@ public class WindRecordService {
         return SystemDataAccess.getAll("select p from WindRecord p ");
     }
 
+    public List<WindRecord> getAllPaged(int offset, int pagesize) {
+        return SystemDataAccess.getAllPaged("select p from WindRecord p ", offset, pagesize);
+    }
     public void add(WindRecord windRecord) {
         windRecord.setId(null);
 
@@ -58,9 +61,10 @@ public class WindRecordService {
         return object != null;
     }
 
+
     public List<WindRecord> getByLocationTime(String latitude, String longitude, String distance, String year, String month, String day) {
 
-        Object[] tvoObject = new Object[4];
+        Object[] tvoObject = new Object[7];
 
         tvoObject[0] = latitude;
         tvoObject[1] = latitude;
@@ -74,7 +78,7 @@ public class WindRecordService {
                 "WHERE (acos(sin(radians(s.latitude)) * sin(radians(?1)) + " +
                 "cos(radians(s.latitude)) * cos(radians(?2)) * " +
                 "cos(radians(s.longitude-(?3)))) * 6371) < ?4 " +
-                "AND s.year = ?5 and s.month = ?6 and s.day = ?7 ", tvoObject, WindRecord.class);
+                "AND s.year0 = ?5 and s.month = ?6 and s.day = ?7 ", tvoObject, WindRecord.class);
     }
 
     public WindScore score(String year, String month, String day, String postalcode) {
