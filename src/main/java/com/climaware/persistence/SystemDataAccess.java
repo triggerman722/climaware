@@ -42,6 +42,38 @@ public final class SystemDataAccess {
 
     }
 
+    public static List getNativeWithParams(String qlString, Object[] values, String mappings) {
+        EntityManager em = EMF.get().createEntityManager();
+        em.getTransaction().begin();
+        Query q = em.createNativeQuery(qlString, mappings);
+
+        for (int i = 0; i < values.length; i++) {
+            q.setParameter(i + 1, values[i]);
+        }
+
+        List lResult = q.getResultList();
+        em.getTransaction().commit();
+        em.close();
+        return lResult;
+
+    }
+
+    public static List getNativeWithParams(String qlString, Object[] values) {
+        EntityManager em = EMF.get().createEntityManager();
+        em.getTransaction().begin();
+        Query q = em.createNativeQuery(qlString);
+
+        for (int i = 0; i < values.length; i++) {
+            q.setParameter(i + 1, values[i]);
+        }
+
+        List lResult = q.getResultList();
+        em.getTransaction().commit();
+        em.close();
+        return lResult;
+
+    }
+
     public static List getAll(String qlString) {
         EntityManager em = EMF.get().createEntityManager();
         em.getTransaction().begin();

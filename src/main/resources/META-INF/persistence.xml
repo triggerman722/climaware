@@ -5,7 +5,6 @@
         <class>com.climaware.security.model.User</class>
         <class>com.climaware.security.model.Role</class>
         <class>com.climaware.wind.model.WindRecord</class>
-        <class>com.climaware.wind.model.WindFact</class>
         <class>com.climaware.postalcode.model.PostalCodeLocation</class>
         <properties>
             <property name="openjpa.ConnectionURL" value="jdbc:derby:derbydb;create=true"/>
@@ -14,7 +13,7 @@
             <!--
                         <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(foreignKeys=true,schemaAction='dropDB,add')"/>
             -->
-            <property name="openjpa.Log" value="DefaultLevel=WARN, Runtime=INFO, Tool=INFO, SQL=INFO"/>
+            <property name="openjpa.Log" value="DefaultLevel=WARN, Runtime=INFO, Tool=INFO, SQL=TRACE"/>
 
         </properties>
     </persistence-unit>

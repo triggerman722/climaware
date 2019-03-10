@@ -6,6 +6,7 @@ import com.climaware.postalcode.service.PostalCodeLocationService;
 import com.climaware.wind.model.WindFact;
 import com.climaware.wind.model.WindScore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WindFactService {
@@ -33,16 +34,25 @@ public class WindFactService {
         tvoObject[2] = longitude;
         tvoObject[3] = distance;
 
-        return SystemDataAccess.getNativeWithParams("SELECT " +
-                        "s.windspeed, " +
-                        "s.windspeed, " +
-                        "s.windspeed, " +
-                        "s.windspeed " +
-                        "from WindRecord s " +
-                        "WHERE (acos(sin(radians(s.latitude)) * sin(radians(?1)) + " +
-                        "cos(radians(s.latitude)) * cos(radians(?2)) * " +
-                        "cos(radians(s.longitude-(?3)))) * 6371) < ?4 "
-                , tvoObject, WindFact.class);
+        List<Object[]> objects = SystemDataAccess.getNativeWithParams("SELECT " +
+                        "max(windspeed) as maximum, " +
+                        "min(windspeed) as minimum, " +
+                        "avg(windspeed) as average, " +
+                        "count(windspeed) as countevents " +
+                        "from WindRecord " +
+                        "WHERE (acos(sin(radians(latitude)) * sin(radians(?1)) + " +
+                        "cos(radians(latitude)) * cos(radians(?2)) * " +
+                        "cos(radians(longitude-(?3)))) * 6371) < ?4"
+                , tvoObject, Object[].class);
+
+        List<WindFact> windFacts = new ArrayList<>();
+
+        //awful and embarrassing.
+        for (Object[] rawEntry : objects) {
+            windFacts.add(new WindFact(rawEntry));
+        }
+
+        return windFacts;
 
     }
 
@@ -62,7 +72,9 @@ public class WindFactService {
 
         int avgwindspeed = 0;
 
-        avgwindspeed = windFacts.get(0).getAverage();
+        WindFact windFact = windFacts.get(0);
+
+        avgwindspeed = windFact.getAverage();
 
         if (avgwindspeed > 85) {
             windScore.setValue(90);

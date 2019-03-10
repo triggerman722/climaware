@@ -6,22 +6,29 @@
 package com.climaware.wind.model;
 
 
-import javax.persistence.Entity;
-
 /**
  * @author greg
  */
-@Entity
+
 public class WindFact {
 
-
     private int maximum;
-
     private int minimum;
-
     private int average;
-
     private int count;
+
+
+    public WindFact() {
+
+    }
+
+
+    public WindFact(Object[] columns) {
+        this.maximum = (columns[0] != null) ? ((int) columns[0]) : 0;
+        this.minimum = (columns[1] != null) ? ((int) columns[1]) : 0;
+        this.average = (columns[2] != null) ? ((int) columns[2]) : 0;
+        this.count = (columns[3] != null) ? ((int) columns[3]) : 0;
+    }
 
     public int getMaximum() {
         return maximum;

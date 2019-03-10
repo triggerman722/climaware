@@ -4,11 +4,28 @@
 <title>Weather Station List</title>
 </head>
 <body>
+<a href="wind/score">Score</a>
+<hr>
+<h1>Add a single record</h1>
+<form method="POST">
+<p>Year: <input name=year>
+<p>Month: <input name=month>
+<p>Day: <input name=day>
+<p>Postal Code: <input name=postalcode>
+<p>Time: <input name=time>
+<p>Windspeed (km/h): <input name=windspeed>
+<p>Latitude: <input name=latitude>
+<p>Longitude: <input name=longitude>
+
+<input type="submit">
+</form>
+<hr>
+<h1>All all records</h1>
 <form method="POST">
 <input type="submit">
 </form>
 
-<h3>Awards</h3>
+<h3>Records</h3>
 <hr size="4" color="gray"/>
 <table>
     <tr>
@@ -17,6 +34,9 @@
     <th>Day</th>
     <th>Time</th>
     <th>Wind Speed</th>
+    <th>Postal Code</th>
+    <th>Latitude</th>
+    <th>Longitude</th>
     </tr>
     <c:forEach items="${windrecords}" var="windrecord" varStatus="status">
     <tr>
@@ -25,6 +45,9 @@
         <td>${windrecord["day"]}</td>
         <td>${windrecord["time"]}</td>
         <td>${windrecord["windspeed"]}</td>
+        <td>${windrecord["postalcode"]}</td>
+        <td>${windrecord["latitude"]}</td>
+        <td>${windrecord["longitude"]}</td>
     </tr>
     </c:forEach>
 </table>
