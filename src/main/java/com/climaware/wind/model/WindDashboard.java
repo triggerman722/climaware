@@ -6,24 +6,29 @@
 package com.climaware.wind.model;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author greg
  */
 
-public class WindFact {
+public class WindDashboard {
 
     private int maximum;
     private int minimum;
     private int average;
     private long count;
 
+    private List<WindDashboardItem> windDashboardItems = new ArrayList<>();
 
-    public WindFact() {
+
+    public WindDashboard() {
 
     }
 
 
-    public WindFact(Object[] columns) {
+    public WindDashboard(Object[] columns) {
         this.maximum = (columns[0] != null) ? ((int) columns[0]) : 0;
         this.minimum = (columns[1] != null) ? ((int) columns[1]) : 0;
         this.average = (columns[2] != null) ? ((int) columns[2]) : 0;
@@ -60,5 +65,13 @@ public class WindFact {
 
     public void setCount(long count) {
         this.count = count;
+    }
+
+    public List<WindDashboardItem> getWindDashboardItems() {
+        return windDashboardItems;
+    }
+
+    public void setWindDashboardItems(List<WindDashboardItem> windDashboardItems) {
+        this.windDashboardItems = windDashboardItems;
     }
 }

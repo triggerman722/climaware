@@ -51,6 +51,17 @@ public class PostalCodeLocationService {
         return null;
     }
 
+    public List<PostalCodeLocation> getByLatitudeLongitudeDistance(String latitude, String longitude, String distance) {
+        Object[] tvoObject = new Object[4];
+
+        tvoObject[0] = latitude;
+        tvoObject[1] = latitude;
+        tvoObject[2] = longitude;
+        tvoObject[3] = distance;
+
+        return SystemDataAccess.getNativeWithParams("SELECT * from PostalCodeLocation s WHERE (acos(sin(radians(s.latitude)) * sin(radians(?1)) + cos(radians(s.latitude)) * cos(radians(?2)) * cos(radians(s.longitude-(?3)))) * 6371) < ?4", tvoObject, PostalCodeLocation.class);
+
+    }
     public void add(PostalCodeLocation postalCodeLocation) {
         postalCodeLocation.setId(null);
 
