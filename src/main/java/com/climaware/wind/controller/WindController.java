@@ -63,7 +63,7 @@ public class WindController extends HttpServlet {
             WindRecord windRecord = new WindRecord();
             windRecord.setLatitude(Float.parseFloat(req.getParameter("latitude")));
             windRecord.setLongitude(Float.parseFloat(req.getParameter("longitude")));
-            windRecord.setPostalcode(req.getParameter("postalcode"));
+            windRecord.setStationid(req.getParameter("stationid"));
             windRecord.setWindspeed(Integer.parseInt(req.getParameter("windspeed")));
             windRecord.setYear(Integer.parseInt(req.getParameter("year")));
             windRecord.setMonth(Integer.parseInt(req.getParameter("month")));

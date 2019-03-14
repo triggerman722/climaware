@@ -75,7 +75,11 @@ public class WindRecordService {
                 "WHERE (acos(sin(radians(s.latitude)) * sin(radians(?1)) + " +
                 "cos(radians(s.latitude)) * cos(radians(?2)) * " +
                 "cos(radians(s.longitude-(?3)))) * 6371) < ?4 " +
-                "AND s.year0 = ?5 and s.month = ?6 and s.day = ?7 ", tvoObject, WindRecord.class);
+                "AND s.year0 = ?5 and s.month = ?6 and s.day = ?7 " +
+                " ORDER BY " +
+                "(acos(sin(radians(s.latitude)) * sin(radians(?1)) + " +
+                "cos(radians(s.latitude)) * cos(radians(?2)) * " +
+                "cos(radians(s.longitude-(?3)))) * 6371) ASC", tvoObject, WindRecord.class);
     }
 
     public WindScore score(String year, String month, String day, String postalcode) {
@@ -133,8 +137,89 @@ public class WindRecordService {
         }
         reader.close();
     }
-
     public void downloadData(int year, int month, int day) throws IOException {
+
+        deleteAll();
+
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("weatherstations/stations.csv");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+        String line;
+        while ((line = reader.readLine()) != null) {
+            line = line.replaceAll("\"", "");
+
+            String parts[] = line.split(",");
+            if (parts.length > 2 && !parts[0].equalsIgnoreCase("name")) {
+                try {
+
+                    int lastyear = (parts[12] != null) ? (Integer.parseInt(parts[12])) : 0;
+                    if (lastyear < 2015) {
+                        continue;
+                    }
+
+                    String province = (parts[1] != null) ? (parts[1]) : "";
+                    if (!province.equalsIgnoreCase("ontario")) {
+                        continue;
+                    }
+                    System.out.println("Gathering records for: " + parts[0]);
+
+                    String stationId = parts[3];
+
+                    List<PostalCodeLocation> postalCodeLocations = postalCodeLocationService.getByLatitudeLongitudeDistance(
+                            parts[6],
+                            parts[7],
+                            "20"
+                    );
+
+                    URL windurl = new URL("http://climate.weather.gc.ca/climate_data/bulk_data_e.html?format=csv&stationID=" +
+                            stationId +
+                            "&Year=" + year +
+                            "&Month=" + month +
+                            "&Day=" + day +
+                            "&timeframe=1&submit=Download+Data");
+
+                    URLConnection windconn = windurl.openConnection();
+                    InputStream windinputStream = windconn.getInputStream();
+                    BufferedReader windreader = new BufferedReader(new InputStreamReader(windinputStream));
+
+                    String windline;
+                    while ((windline = windreader.readLine()) != null) {
+                        windline = windline.replaceAll("\"", "");
+                        String windparts[] = windline.split(",");
+                        if (windparts.length > 2) {
+                            try {
+                                PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("./data/" + stationId + ".csv", true)));
+                                out.println(windline);
+                                out.close();
+
+                                //is the answer to set the postal code here?
+
+                                WindRecord windRecord = new WindRecord();
+                                windRecord.setYear(Integer.parseInt(windparts[1]));
+                                windRecord.setMonth(Integer.parseInt(windparts[2]));
+                                windRecord.setDay(Integer.parseInt(windparts[3]));
+                                windRecord.setTime(windparts[4]);
+                                windRecord.setWindspeed(Integer.parseInt(windparts[13]));
+                                windRecord.setLatitude(Float.parseFloat(parts[6]));
+                                windRecord.setLongitude(Float.parseFloat(parts[7]));
+                                windRecord.setStationid(stationId);
+
+                                add(windRecord);
+
+                            } catch (Exception e) {
+                            }
+                        }
+                    }
+                    windreader.close();
+                } catch (Exception e) {
+
+                }
+            }
+        }
+        reader.close();
+    }
+
+    public void downloadData6(int year, int month, int day) throws IOException {
 
         deleteAll();
 

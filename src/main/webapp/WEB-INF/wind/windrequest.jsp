@@ -8,7 +8,7 @@
 <p>Year: <input name=year>
 <p>Month: <input name=month>
 <p>Day: <input name=day>
-<p>Postal Code: <input name=postalcode>
+<p>StationId: <input name=stationid>
 <p>Time: <input name=time>
 <p>Windspeed (km/h): <input name=windspeed>
 <p>Latitude: <input name=latitude>

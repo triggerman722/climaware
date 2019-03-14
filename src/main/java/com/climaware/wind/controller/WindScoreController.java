@@ -1,5 +1,9 @@
 package com.climaware.wind.controller;
 
+import com.climaware.postalcode.model.PostalCodeLocation;
+import com.climaware.postalcode.service.PostalCodeLocationService;
+import com.climaware.weatherstation.model.WeatherStation;
+import com.climaware.weatherstation.service.WeatherStationService;
 import com.climaware.wind.model.WindScore;
 import com.climaware.wind.service.WindFactService;
 import com.climaware.wind.service.WindRecordService;
@@ -10,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by greg on 3/3/19.
@@ -19,16 +24,22 @@ public class WindScoreController extends HttpServlet {
 
     WindRecordService windRecordService;
     WindFactService windFactService;
+    PostalCodeLocationService postalCodeLocationService;
+    WeatherStationService weatherStationService;
 
     @Override
     public void init() throws ServletException {
         super.init();
         windRecordService = new WindRecordService();
         windFactService = new WindFactService();
+        postalCodeLocationService = new PostalCodeLocationService();
+        weatherStationService = new WeatherStationService();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<PostalCodeLocation> postalCodeLocations = postalCodeLocationService.getRandomPostalCodes(10);
+        req.setAttribute("randompostalcodes", postalCodeLocations);
         getServletContext().getRequestDispatcher("/WEB-INF/wind/windscorerequest.jsp").forward(req, resp);
     }
 
@@ -48,7 +59,27 @@ public class WindScoreController extends HttpServlet {
 
             windScore = windRecordService.score(year, month, day, postalcode);
         } else if (action != null && action.equalsIgnoreCase("udw")) {
-            windScore = windFactService.score(postalcode);
+
+            String distance = req.getParameter("distance");
+
+            //I can't know the PC the user will enter. So I must use the postalcodeservice to look it up.
+            PostalCodeLocation postalCodeLocation = postalCodeLocationService.getByPostalCode(postalcode);
+
+            //Then I need to find the nearest weatherstation.
+            List<WeatherStation> weatherStation = weatherStationService.getByLatitudeLongitudeDistance(
+                    String.valueOf(postalCodeLocation.getLatitude()),
+                    String.valueOf(postalCodeLocation.getLongitude()),
+                    distance);
+
+            String stationid = "0";
+            if (weatherStation.size() > 0) {
+                stationid = weatherStation.get(0).getStationid();
+            }
+
+            //Then I need to find the weather records that correspond to that weather station.
+
+
+            windScore = windFactService.score(stationid);
         }
         req.setAttribute("score", windScore);
 

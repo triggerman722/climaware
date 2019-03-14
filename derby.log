@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Mon Mar 11 08:18:26 EDT 2019:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.3.0 - (1405108): instance a816c00e-0169-6cb0-9709-000005ee4b18 
+Thu Mar 14 06:03:21 EDT 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.3.0 - (1405108): instance a816c00e-0169-7ba7-ffcc-000006b0e4a0 
 on database directory /home/greg/Projects/climaware/derbydb  with class loader WebappClassLoader
   context: /climaware
   delegate: false

@@ -8,7 +8,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class PostalCodeLocationService {
 
@@ -20,6 +22,9 @@ public class PostalCodeLocationService {
         return SystemDataAccess.getAll("select p from PostalCodeLocation p ");
     }
 
+    public List<Long> countAll() {
+        return SystemDataAccess.getAll("select COUNT(p.postalcode) from PostalCodeLocation p ");
+    }
     public PostalCodeLocation getByPostalCode(String postalcode) {
         String upperpostalcode = postalcode.toUpperCase();
 
@@ -59,7 +64,14 @@ public class PostalCodeLocationService {
         tvoObject[2] = longitude;
         tvoObject[3] = distance;
 
-        return SystemDataAccess.getNativeWithParams("SELECT * from PostalCodeLocation s WHERE (acos(sin(radians(s.latitude)) * sin(radians(?1)) + cos(radians(s.latitude)) * cos(radians(?2)) * cos(radians(s.longitude-(?3)))) * 6371) < ?4", tvoObject, PostalCodeLocation.class);
+        return SystemDataAccess.getNativeWithParams("SELECT * from PostalCodeLocation s" +
+                " WHERE (acos(sin(radians(s.latitude)) * sin(radians(?1)) " +
+                "+ cos(radians(s.latitude)) * cos(radians(?2)) * " +
+                "cos(radians(s.longitude-(?3)))) * 6371) < ?4" +
+                " ORDER BY " +
+                "(acos(sin(radians(s.latitude)) * sin(radians(?1)) + " +
+                "cos(radians(s.latitude)) * cos(radians(?2)) * " +
+                "cos(radians(s.longitude-(?3)))) * 6371) ASC", tvoObject, PostalCodeLocation.class);
 
     }
     public void add(PostalCodeLocation postalCodeLocation) {
@@ -101,6 +113,7 @@ public class PostalCodeLocationService {
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
         String line;
+        int i = 0;
         while ((line = reader.readLine()) != null) {
             String parts[] = line.split(",");
 
@@ -112,16 +125,38 @@ public class PostalCodeLocationService {
                 if (parts[2] == null | parts[2] == "" | Double.valueOf(parts[2]) == 0)
                     continue;
 
+                String startwith = parts[0].substring(0, 1).toLowerCase();
+                if (!"klmnp".contains(startwith))
+                    continue;
+
                 PostalCodeLocation postalCodeLocation = new PostalCodeLocation();
                 postalCodeLocation.setPostalcode(parts[0]);
                 postalCodeLocation.setLatitude(Double.valueOf(parts[1]));
                 postalCodeLocation.setLongitude(Double.valueOf(parts[2]));
 
                 add(postalCodeLocation);
+                System.out.println(i++ + ": " + postalCodeLocation.getPostalcode());
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+    public List<PostalCodeLocation> getRandomPostalCodes(int count) {
+        List<PostalCodeLocation> postalCodeLocations = new ArrayList<>();
+        long countrecords = 0;
+        List<Long> counter = countAll();
+        if (counter != null && counter.size() > 0) {
+            countrecords = counter.get(0);
+        }
+        for (int i = 0; i < count; i++) {
+            Random random = new Random();
+            int number = random.nextInt((int) countrecords);
+            PostalCodeLocation postalCodeLocation = get(number);
+            if (postalCodeLocation != null)
+                postalCodeLocations.add(postalCodeLocation);
+        }
+        return postalCodeLocations;
     }
 }

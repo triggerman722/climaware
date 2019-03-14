@@ -14,7 +14,7 @@
 
 <h3>Records by latitude and longitude</h3>
 <hr size="4" color="gray"/>
-<table>
+<table border=1>
     <tr>
     <th>Index</th>
     <th>Latitude</th>

@@ -35,6 +35,7 @@ public class WindDashboardItem {
         this.minwindspeed = (columns[5] != null) ? ((int) columns[5]) : 0;
         this.maxwindspeed = (columns[6] != null) ? ((int) columns[6]) : 0;
         this.avgwindspeed = (columns[7] != null) ? ((int) columns[7]) : 0;
+        this.nearpostalcode = (columns[8] != null) ? ((String) columns[8]) : "";
     }
 
     public double getLatitude() {

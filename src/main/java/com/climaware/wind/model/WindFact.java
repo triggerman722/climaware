@@ -27,7 +27,15 @@ public class WindFact {
         this.maximum = (columns[0] != null) ? ((int) columns[0]) : 0;
         this.minimum = (columns[1] != null) ? ((int) columns[1]) : 0;
         this.average = (columns[2] != null) ? ((int) columns[2]) : 0;
-        this.count = (columns[3] != null) ? ((long) columns[3]) : 0;
+        this.count = (columns[3] != null) ? ((int) columns[3]) : 0;
+    }
+
+    //Note: primitive int can't be null.
+    public WindFact(int max, int min, int avg, long count) {
+        this.maximum = max;
+        this.minimum = min;
+        this.average = avg;
+        this.count = count;
     }
 
     public int getMaximum() {

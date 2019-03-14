@@ -17,9 +17,19 @@
 <p>For underwriters
 <form method="POST">
 <p>Postal Code: <input name=postalcode>
+<p>Distance: <input name=distance value=50>
 <input type=hidden name=action value=udw>
 <input type="submit">
 </form>
+<p>Random postal codes to try:
+<c:forEach items="${randompostalcodes}" var="randompostalcode" varStatus="status">
+    <form method="POST">
+    <input type=hidden name=postalcode value="${randompostalcode['postalcode']}">
+    <input type=hidden name=distance value=10>
+    <input type=hidden name=action value=udw>
+    <input type="submit" value="${randompostalcode.postalcode}">
+    </form>
+</c:forEach>
 
 </body>
 </html>

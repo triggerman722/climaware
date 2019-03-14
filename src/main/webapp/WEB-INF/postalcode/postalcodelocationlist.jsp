@@ -10,19 +10,6 @@
 
 <h3>Awards</h3>
 <hr size="4" color="gray"/>
-<table>
-    <tr>
-    <th>Postal Code</th>
-    <th>Longitude</th>
-    <th>Latitude</th>
-    </tr>
-    <c:forEach items="${postalcodelocations}" var="postalcodelocation" varStatus="status">
-    <tr>
-        <td>${postalcodelocation["postalcode"]}</td>
-        <td>${postalcodelocation["longitude"]}</td>
-        <td>${postalcodelocation["latitude"]}</td>
-    </tr>
-    </c:forEach>
-</table>
+
 </body>
 </html>

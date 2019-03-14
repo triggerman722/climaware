@@ -11,7 +11,7 @@
 <p>Year: <input name=year>
 <p>Month: <input name=month>
 <p>Day: <input name=day>
-<p>Postal Code: <input name=postalcode>
+<p>Station Id: <input name=stationid>
 <p>Time: <input name=time>
 <p>Windspeed (km/h): <input name=windspeed>
 <p>Latitude: <input name=latitude>
@@ -34,7 +34,7 @@
     <th>Day</th>
     <th>Time</th>
     <th>Wind Speed</th>
-    <th>Postal Code</th>
+    <th>Station Id</th>
     <th>Latitude</th>
     <th>Longitude</th>
     </tr>
@@ -45,7 +45,7 @@
         <td>${windrecord["day"]}</td>
         <td>${windrecord["time"]}</td>
         <td>${windrecord["windspeed"]}</td>
-        <td>${windrecord["postalcode"]}</td>
+        <td>${windrecord["stationid"]}</td>
         <td>${windrecord["latitude"]}</td>
         <td>${windrecord["longitude"]}</td>
     </tr>

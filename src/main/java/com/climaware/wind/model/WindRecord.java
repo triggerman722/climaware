@@ -27,11 +27,7 @@ public class WindRecord {
     private double latitude;
     private double longitude;
 
-    private String postalcode;
-    private String postalcodeprefix;
-    private String postalcodesuffix;
-    private String postalcoderegionnarrow; //In a PC of N6K4W5, this value is N6 (i.e. the first two digits)
-    private String postalcoderegionwide; //For N6K4W5, this value is N (i.e. the first digit).
+    private String stationid;
 
     public Long getId() {
         return id;
@@ -97,43 +93,11 @@ public class WindRecord {
         this.longitude = longitude;
     }
 
-    public String getPostalcode() {
-        return postalcode;
+    public String getStationid() {
+        return stationid;
     }
 
-    public void setPostalcode(String postalcode) {
-        this.postalcode = postalcode;
-    }
-
-    public String getPostalcodeprefix() {
-        return postalcodeprefix;
-    }
-
-    public void setPostalcodeprefix(String postalcodeprefix) {
-        this.postalcodeprefix = postalcodeprefix;
-    }
-
-    public String getPostalcodesuffix() {
-        return postalcodesuffix;
-    }
-
-    public void setPostalcodesuffix(String postalcodesuffix) {
-        this.postalcodesuffix = postalcodesuffix;
-    }
-
-    public String getPostalcoderegionnarrow() {
-        return postalcoderegionnarrow;
-    }
-
-    public void setPostalcoderegionnarrow(String postalcoderegionnarrow) {
-        this.postalcoderegionnarrow = postalcoderegionnarrow;
-    }
-
-    public String getPostalcoderegionwide() {
-        return postalcoderegionwide;
-    }
-
-    public void setPostalcoderegionwide(String postalcoderegionwide) {
-        this.postalcoderegionwide = postalcoderegionwide;
+    public void setStationid(String stationid) {
+        this.stationid = stationid;
     }
 }

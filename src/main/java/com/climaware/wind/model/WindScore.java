@@ -7,6 +7,7 @@ public class WindScore {
 
     int value;
     private Score score;
+    private WindFact windFact;
 
     public Score getScore() {
         return score;
@@ -22,6 +23,14 @@ public class WindScore {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    public WindFact getWindFact() {
+        return windFact;
+    }
+
+    public void setWindFact(WindFact windFact) {
+        this.windFact = windFact;
     }
 
     public enum Score {
