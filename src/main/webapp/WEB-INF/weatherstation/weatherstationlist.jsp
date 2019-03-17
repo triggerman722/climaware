@@ -24,6 +24,7 @@
     <th>First Year</th>
     <th>Last Year</th>
     <th>PC</th>
+    <th>Station ID</th>
     </tr>
     <c:forEach items="${weatherstations}" var="weatherstation" varStatus="status">
     <tr>
@@ -34,6 +35,7 @@
         <td>${weatherstation["firstyear"]}</td>
         <td>${weatherstation["lastyear"]}</td>
         <td>${weatherstation["tcid"]}</td>
+        <td>${weatherstation["stationid"]}</td>
         <!-- End of inner loop -->
     </tr>
     </c:forEach>

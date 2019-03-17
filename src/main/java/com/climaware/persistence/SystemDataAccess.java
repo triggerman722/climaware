@@ -1,6 +1,7 @@
 package com.climaware.persistence;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.List;
 
@@ -125,6 +126,22 @@ public final class SystemDataAccess {
         em.refresh(p);
         em.close();
         return p;
+    }
+
+    public static void batchAdd(List objects) {
+        EntityManager em = EMF.get().createEntityManager();
+        EntityTransaction entityTransaction = em.getTransaction();
+        entityTransaction.begin();
+
+        for (int i = 0; i < objects.size(); i++) {
+            em.persist(objects.get(i));
+            if (i % 20 == 0) {
+                em.flush();
+                em.clear();
+            }
+        }
+        entityTransaction.commit();
+        em.close();
     }
 
     public static Object set(Class entityClass, Object primaryKey, Object objectToMerge) {

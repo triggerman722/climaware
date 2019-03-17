@@ -25,7 +25,7 @@
     <th>Min Windspeed</th>
     <th>Max Windspeed</th>
     <th>avg Windspeed</th>
-    <th>Nearest Postal Code</th>
+    <th>Station ID</th>
     </tr>
     <c:forEach items="${dashboard.windDashboardItems}" var="dashboarditem" varStatus="status">
     <tr>
@@ -38,7 +38,7 @@
         <td>${dashboarditem.minwindspeed}</td>
         <td>${dashboarditem.maxwindspeed}</td>
         <td>${dashboarditem.avgwindspeed}</td>
-        <td>${dashboarditem.nearpostalcode}</td>
+        <td>${dashboarditem.stationid}</td>
     </tr>
     </c:forEach>
 </table>

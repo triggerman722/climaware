@@ -143,6 +143,9 @@ public class PostalCodeLocationService {
         }
     }
 
+    public List<PostalCodeLocation> getAllPaged(int offset, int pagesize) {
+        return SystemDataAccess.getAllPaged("select p from PostalCodeLocation p ", offset, pagesize);
+    }
     public List<PostalCodeLocation> getRandomPostalCodes(int count) {
         List<PostalCodeLocation> postalCodeLocations = new ArrayList<>();
         long countrecords = 0;

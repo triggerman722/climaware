@@ -20,7 +20,7 @@ public class WindDashboardItem {
     private int minwindspeed;
     private int maxwindspeed;
     private int avgwindspeed;
-    private String nearpostalcode = "N/A";
+    private String stationid = "N/A";
 
     public WindDashboardItem() {
 
@@ -35,7 +35,7 @@ public class WindDashboardItem {
         this.minwindspeed = (columns[5] != null) ? ((int) columns[5]) : 0;
         this.maxwindspeed = (columns[6] != null) ? ((int) columns[6]) : 0;
         this.avgwindspeed = (columns[7] != null) ? ((int) columns[7]) : 0;
-        this.nearpostalcode = (columns[8] != null) ? ((String) columns[8]) : "";
+        this.stationid = (columns[8] != null) ? ((String) columns[8]) : "";
     }
 
     public double getLatitude() {
@@ -102,11 +102,11 @@ public class WindDashboardItem {
         this.avgwindspeed = avgwindspeed;
     }
 
-    public String getNearpostalcode() {
-        return nearpostalcode;
+    public String getStationid() {
+        return stationid;
     }
 
-    public void setNearpostalcode(String nearpostalcode) {
-        this.nearpostalcode = nearpostalcode;
+    public void setStationid(String stationid) {
+        this.stationid = stationid;
     }
 }

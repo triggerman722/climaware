@@ -24,10 +24,9 @@
 <p>Random postal codes to try:
 <c:forEach items="${randompostalcodes}" var="randompostalcode" varStatus="status">
     <form method="POST">
-    <input type=hidden name=postalcode value="${randompostalcode['postalcode']}">
-    <input type=hidden name=distance value=10>
+    <input type=text name=distance value=10>
     <input type=hidden name=action value=udw>
-    <input type="submit" value="${randompostalcode.postalcode}">
+    <input type="submit" value="${randompostalcode.postalcode}" name="postalcode">
     </form>
 </c:forEach>
 

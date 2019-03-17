@@ -1,14 +1,14 @@
 ----------------------------------------------------------------
-Fri Mar 15 08:05:11 EDT 2019:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.3.0 - (1405108): instance a816c00e-0169-813d-e5c9-000004e92128 
-on database directory /home/greg/Projects/climaware/derbydb  with class loader WebappClassLoader
+Sun Mar 17 10:31:58 EDT 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.1.0 - (1808820): instance a816c00e-0169-8c10-ff67-000001ca0ab0 
+on database directory /home/greg/Projects/climaware/derbydb with class loader WebappClassLoader
   context: /climaware
   delegate: false
   repositories:
 ----------> Parent Classloader:
 ClassRealm[plugin>org.apache.tomcat.maven:tomcat7-maven-plugin:2.2, parent: sun.misc.Launcher$AppClassLoader@18b4aac2]
  
-Loaded from file:/home/greg/.m2/repository/org/apache/derby/derby/10.8.3.0/derby-10.8.3.0.jar
+Loaded from file:/home/greg/.m2/repository/org/apache/derby/derby/10.14.1.0/derby-10.14.1.0.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_191-8u191-b12-2ubuntu0.18.04.1-b12
 user.dir=/home/greg/Projects/climaware

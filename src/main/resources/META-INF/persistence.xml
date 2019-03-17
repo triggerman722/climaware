@@ -10,11 +10,13 @@
         <properties>
             <property name="openjpa.ConnectionURL" value="jdbc:derby:derbydb;create=true"/>
             <property name="openjpa.ConnectionDriverName" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+            <property name="openjpa.jdbc.DBDictionary" value="batchLimit=-1"/>
             <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
             <!--
                         <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(foreignKeys=true,schemaAction='dropDB,add')"/>
             -->
-            <property name="openjpa.Log" value="DefaultLevel=WARN, Runtime=INFO, Tool=INFO, SQL=TRACE"/>
+            <property name="openjpa.Log" value="DefaultLevel=WARN, Runtime=INFO, Tool=INFO, SQL=INFO"/>
+
 
         </properties>
     </persistence-unit>

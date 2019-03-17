@@ -3,6 +3,7 @@ package com.climaware.postalcode.controller;
 
 import com.climaware.postalcode.model.PostalCodeLocation;
 import com.climaware.postalcode.service.PostalCodeLocationService;
+import com.climaware.util.ControllerUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,7 +36,13 @@ public class PostalCodeLocationController extends HttpServlet {
         List<PostalCodeLocation> postalCodeLocations = new ArrayList<>();
 
         if (id == null) {
-            postalCodeLocations = postalCodeLocationService.getAll();
+            int offset = ControllerUtil.getParameterAsInt(req.getParameter("offset"), 0, 0, 9999);
+            int pagesize = ControllerUtil.getParameterAsInt(req.getParameter("pagesize"), 10, 0, 9999);
+            int backoffset = ControllerUtil.getParameterAsInt(String.valueOf(offset - pagesize), 0, 0, 9999);
+            postalCodeLocations = postalCodeLocationService.getAllPaged(offset, pagesize);
+            req.setAttribute("offset", offset + pagesize);
+            req.setAttribute("backoffset", backoffset);
+            req.setAttribute("pagesize", pagesize);
         } else {
             PostalCodeLocation postalCodeLocation = postalCodeLocationService.get(Long.valueOf(id));
             postalCodeLocations.add(postalCodeLocation);

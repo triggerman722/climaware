@@ -131,17 +131,17 @@ public class WindFactService {
 
         windScore.setWindFact(windFact);
 
-        int avgwindspeed = 0;
+        int maxwindspeed = 0;
 
-        avgwindspeed = windFact.getAverage();
+        maxwindspeed = windFact.getMaximum();
 
-        if (avgwindspeed > 85) {
+        if (maxwindspeed > 85) {
             windScore.setValue(90);
             windScore.setScore(WindScore.Score.HIGH);
-        } else if (avgwindspeed > 50) {
+        } else if (maxwindspeed > 50) {
             windScore.setValue(75);
             windScore.setScore(WindScore.Score.MEDIUM);
-        } else if (avgwindspeed <= 50) {
+        } else if (maxwindspeed <= 50) {
             windScore.setValue(25);
             windScore.setScore(WindScore.Score.LOW);
         }

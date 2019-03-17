@@ -82,6 +82,7 @@ public class WindScoreController extends HttpServlet {
             windScore = windFactService.score(stationid);
         }
         req.setAttribute("score", windScore);
+        req.setAttribute("postalcode", postalcode);
 
         getServletContext().getRequestDispatcher("/WEB-INF/wind/windscoreresponse.jsp").forward(req, resp);
 
