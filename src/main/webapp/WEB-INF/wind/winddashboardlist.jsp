@@ -38,7 +38,7 @@
         <td>${dashboarditem.minwindspeed}</td>
         <td>${dashboarditem.maxwindspeed}</td>
         <td>${dashboarditem.avgwindspeed}</td>
-        <td>${dashboarditem.stationid}</td>
+        <td><a href="/climaware/weatherstation?stationid=${dashboarditem.stationid}">${dashboarditem.stationid}</a></td>
     </tr>
     </c:forEach>
 </table>

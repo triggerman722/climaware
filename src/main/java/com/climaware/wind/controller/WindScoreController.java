@@ -50,6 +50,8 @@ public class WindScoreController extends HttpServlet {
         //in either case, a vague low/medium/high should be returned.
         String action = req.getParameter("action");
         String postalcode = req.getParameter("postalcode");
+        String stationid = "0";
+
         WindScore windScore = null;
 
         if (action != null && action.equalsIgnoreCase("adj")) {
@@ -71,7 +73,9 @@ public class WindScoreController extends HttpServlet {
                     String.valueOf(postalCodeLocation.getLongitude()),
                     distance);
 
-            String stationid = "0";
+            req.setAttribute("longitude", postalCodeLocation.getLongitude());
+            req.setAttribute("latitude", postalCodeLocation.getLatitude());
+
             if (weatherStation.size() > 0) {
                 stationid = weatherStation.get(0).getStationid();
             }
@@ -83,6 +87,7 @@ public class WindScoreController extends HttpServlet {
         }
         req.setAttribute("score", windScore);
         req.setAttribute("postalcode", postalcode);
+        req.setAttribute("stationid", stationid);
 
         getServletContext().getRequestDispatcher("/WEB-INF/wind/windscoreresponse.jsp").forward(req, resp);
 

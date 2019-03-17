@@ -105,4 +105,18 @@ public class WeatherStationService {
         return object != null;
     }
 
+    public WeatherStation getByStationId(String stationid) {
+        Object[][] objects = new Object[1][2];
+        objects[0][0] = "stationid";
+        objects[0][1] = stationid;
+        return (WeatherStation) SystemDataAccess.getOneWithParams("select p from WeatherStation p where p.stationid = :stationid ", objects);
+    }
+
+    public int deleteByStationId(String stationid) {
+        Object[][] objects = new Object[1][2];
+        objects[0][0] = "stationid";
+        objects[0][1] = stationid;
+        return SystemDataAccess.deleteWithParams("delete from WeatherStation p where p.stationid = :stationid ", objects);
+
+    }
 }

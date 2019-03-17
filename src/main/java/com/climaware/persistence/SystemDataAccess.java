@@ -27,6 +27,23 @@ public final class SystemDataAccess {
 
     }
 
+    public static Object getOneWithParams(String qlString, Object[][] values) {
+        EntityManager em = EMF.get().createEntityManager();
+        em.getTransaction().begin();
+        Query q = em.createQuery(qlString);
+
+        for (Object[] o : values) {
+            q.setParameter((String) o[0], o[1]);
+        }
+
+        q.setFirstResult(0);
+        q.setMaxResults(1);
+        Object lResult = q.getSingleResult();
+        em.getTransaction().commit();
+        em.close();
+        return lResult;
+    }
+
     public static List getNativeWithParams(String qlString, Object[] values, Class entityClass) {
         EntityManager em = EMF.get().createEntityManager();
         em.getTransaction().begin();
@@ -177,6 +194,22 @@ public final class SystemDataAccess {
         em.getTransaction().commit();
         em.close();
         return lResult;
+    }
+
+    public static int deleteWithParams(String qlString, Object[][] values) {
+        EntityManager em = EMF.get().createEntityManager();
+        em.getTransaction().begin();
+        Query q = em.createQuery(qlString);
+
+        for (Object[] o : values) {
+            q.setParameter((String) o[0], o[1]);
+        }
+
+        int lResult = q.executeUpdate();
+        em.getTransaction().commit();
+        em.close();
+        return lResult;
+
     }
 
 }

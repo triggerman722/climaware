@@ -32,11 +32,30 @@ public class WeatherStationController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String stationid = req.getParameter("stationid");
+        if (stationid != null) {
+            WeatherStation weatherStation = weatherStationService.getByStationId(stationid);
+            req.setAttribute("weatherstation", weatherStation);
+            getServletContext().getRequestDispatcher("/WEB-INF/weatherstation/weatherstationedit.jsp").forward(req, resp);
+        } else {
+            getServletContext().getRequestDispatcher("/WEB-INF/weatherstation/weatherstationlist.jsp").forward(req, resp);
+        }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String stationid = req.getParameter("stationid");
+        weatherStationService.deleteByStationId(stationid);
         getServletContext().getRequestDispatcher("/WEB-INF/weatherstation/weatherstationlist.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String _method = req.getParameter("_method");
+        if (_method != null && _method.equalsIgnoreCase("delete")) {
+            doDelete(req, resp);
+            return;
+        }
         String postalcode = req.getParameter("postalcode");
         if (postalcode == null) {
             weatherStationService.addAll();
