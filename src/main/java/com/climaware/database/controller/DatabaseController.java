@@ -32,8 +32,18 @@ public class DatabaseController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String datetime = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
-        int numrows = databaseService.performBackup(datetime);
+        String isreload = req.getParameter("reload");
+        int numrows = 0; 
+        if(isreload!=null) {
+            numrows = databaseService.performReload();
+        } else if (req.getParameter("reloadweatherstations") !=null) {
+            numrows = databaseService.performReloadWeatherstations();
+        } else if (req.getParameter("reloadpostalcodes")!=null) {
+            numrows = databaseService.performReloadPostalcodes();
+        } else {
+            String datetime = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+            numrows = databaseService.performBackup(datetime);
+        }
         req.setAttribute("rowsaffected", numrows);
         getServletContext().getRequestDispatcher("/WEB-INF/database/databaserequest.jsp").forward(req, resp);
     }

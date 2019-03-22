@@ -107,6 +107,17 @@ public final class SystemDataAccess {
         return lResult;
 
     }
+    public static int getNativeSingle(String qlString) {
+        EntityManager em = EMF.get().createEntityManager();
+        em.getTransaction().begin();
+        Query q = em.createNativeQuery(qlString);
+
+        int lResult = q.executeUpdate();
+        em.getTransaction().commit();
+        em.close();
+        return lResult;
+
+    }
     public static List getAll(String qlString) {
         EntityManager em = EMF.get().createEntityManager();
         em.getTransaction().begin();

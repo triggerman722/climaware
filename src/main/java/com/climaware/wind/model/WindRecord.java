@@ -18,6 +18,7 @@ public class WindRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name="year0")
     private int year;
     private int month;
     private int day;
